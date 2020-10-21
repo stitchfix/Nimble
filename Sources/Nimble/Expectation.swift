@@ -64,46 +64,6 @@ public struct Expectation<T> {
         handler.assert(pass, message: message, location: expression.location)
     }
 
-    ////////////////// OLD API /////////////////////
-
-    /// DEPRECATED: Tests the actual value using a matcher to match.
-    @available(*, deprecated, message: "Use Predicate instead")
-    @discardableResult
-    public func to<U>(_ matcher: U, description: String? = nil) -> Self
-        where U: Matcher, U.ValueType == T {
-            let (pass, msg) = execute(
-                expression,
-                .toMatch,
-                matcher.predicate,
-                to: "to",
-                description: description,
-                captureExceptions: false
-            )
-            verify(pass, msg)
-            return self
-    }
-
-    /// DEPRECATED: Tests the actual value using a matcher to not match.
-    @available(*, deprecated, message: "Use Predicate instead")
-    @discardableResult
-    public func toNot<U>(_ matcher: U, description: String? = nil) -> Self
-        where U: Matcher, U.ValueType == T {
-        // swiftlint:disable:next line_length
-        let (pass, msg) = expressionDoesNotMatch(expression, matcher: matcher, toNot: "to not", description: description)
-        verify(pass, msg)
-        return self
-    }
-
-    /// DEPRECATED: Tests the actual value using a matcher to not match.
-    ///
-    /// Alias to toNot().
-    @available(*, deprecated, message: "Use Predicate instead")
-    @discardableResult
-    public func notTo<U>(_ matcher: U, description: String? = nil) -> Self
-        where U: Matcher, U.ValueType == T {
-        return toNot(matcher, description: description)
-    }
-
     ////////////////// NEW API /////////////////////
 
     /// Tests the actual value using a matcher to match.
